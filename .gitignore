@@ -1,0 +1,6 @@
+vagrant/.vagrant/
+vagrant/nomad-k3s.yaml
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+terraform/.terraform/
+packer/output-box
