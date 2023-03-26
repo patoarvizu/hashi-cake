@@ -14,6 +14,15 @@ job "k3s" {
       name = "k3s-a"
       port = "k3s"
     }
+    restart {
+      attempts = 10
+      interval = "5m"
+      mode = "delay"
+    }
+    affinity {
+      attribute = "$${node.unique.name}"
+      value = "node1"
+    }
     task "server" {
       driver = "raw_exec"
       artifact {
@@ -43,6 +52,11 @@ job "k3s" {
     }
   }
   group "k3s-b" {
+    restart {
+      attempts = 10
+      interval = "5m"
+      mode = "delay"
+    }
     task "server" {
       driver = "raw_exec"
       artifact {
@@ -67,6 +81,11 @@ job "k3s" {
     }
   }
   group "k3s-c" {
+    restart {
+      attempts = 10
+      interval = "5m"
+      mode = "delay"
+    }
     task "server" {
       driver = "raw_exec"
       artifact {
