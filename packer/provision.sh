@@ -31,12 +31,10 @@ sudo mkdir -p /etc/nomad.d
 sudo chmod a+w /etc/nomad.d
 (
 cat <<-EOF
-data_dir = "/etc/nomad.d"
+data_dir = "/opt/nomad"
 server {
   enabled = true
-  bootstrap_expect = 3
 }
-bind_addr = "0.0.0.0"
 advertise {
   http = "{{ GetInterfaceIP \\"eth1\\" }}"
   rpc = "{{ GetInterfaceIP \\"eth1\\" }}"
@@ -45,13 +43,6 @@ advertise {
 client {
   enabled = true
   network_interface = "eth1"
-  host_volume "tmp" {
-    path      = "/tmp"
-    read_only = false
-  }
-}
-consul {
-  address = "127.0.0.1:8500"
 }
 plugin "raw_exec" {
   config {
@@ -69,7 +60,7 @@ cat <<-EOF
 
   [Service]
   Restart=on-failure
-  ExecStart=/usr/bin/nomad agent -config=/etc/nomad.d/server.hcl
+  ExecStart=/usr/bin/nomad agent -config=/etc/nomad.d/server.hcl -config=/etc/nomad.d/bootstrap.hcl
   ExecReload=/bin/kill -HUP $MAINPID
 
   [Install]
@@ -90,14 +81,10 @@ client_addr = "0.0.0.0"
 ui_config {
   enabled = true
 }
-data_dir = "/tmp/data"
+data_dir = "/opt/consul"
 server = true
-bootstrap_expect = 3
 connect {
   enabled = true
-}
-ports {
-  grpc = 8502
 }
 recursors = ["8.8.8.8", "8.8.4.4"]
 EOF
