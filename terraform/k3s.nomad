@@ -1,5 +1,4 @@
 job "k3s" {
-  datacenters = ["dc1"]
   constraint {
     operator = "distinct_hosts"
     value = "true"
