@@ -9,6 +9,7 @@ Vagrant.configure('2') do |config|
       n.vm.hostname = "node#{i}"
       n.vm.provision "shell", path: "provision.sh"
       n.vm.network "private_network", ip: "192.168.56.#{78 + i - 1}"
+      n.vm.network "forwarded_port", guest: 8200, host: 8200 + i - 1
       n.vm.network "forwarded_port", guest: 8500, host: 8500 + i - 1
       n.vm.network "forwarded_port", guest: 4646, host: 4646 + i - 1
       n.vm.network "forwarded_port", guest: 6443, host: 6443 + i - 1
