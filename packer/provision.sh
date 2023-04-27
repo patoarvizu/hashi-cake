@@ -79,6 +79,9 @@ connect {
   enabled = true
 }
 recursors = ["8.8.8.8", "8.8.4.4"]
+ports {
+  dns = 53
+}
 EOF
 ) | sudo tee /etc/consul.d/config.hcl
 (
@@ -95,3 +98,7 @@ cat <<-EOF
   WantedBy=multi-user.target
 EOF
 ) | sudo tee /etc/systemd/system/consul.service
+
+sudo systemctl disable systemd-resolved.service
+sudo systemctl stop systemd-resolved
+sudo rm /etc/resolv.conf
