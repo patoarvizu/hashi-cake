@@ -12,7 +12,7 @@ sudo apt update
 sudo apt install -y docker-ce
 sudo usermod -aG docker vagrant
 
-curl -sSL -o cni-plugins.tgz https://github.com/containernetworking/plugins/releases/download/v0.8.6/cni-plugins-linux-amd64-v1.2.0.tgz
+curl -sSL -o cni-plugins.tgz https://github.com/containernetworking/plugins/releases/download/v1.2.0/cni-plugins-linux-amd64-v1.2.0.tgz
 sudo mkdir -p /opt/cni/bin
 sudo tar -C /opt/cni/bin -xzf cni-plugins.tgz
 
