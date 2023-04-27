@@ -25,7 +25,7 @@ job "k3s" {
     task "server" {
       driver = "raw_exec"
       artifact {
-        source = "https://github.com/k3s-io/k3s/releases/download/v1.22.17%2Bk3s1/k3s"
+        source = "https://github.com/k3s-io/k3s/releases/download/v1.23.17%2Bk3s1/k3s"
       }
       config {
         command = "local/k3s"
@@ -59,7 +59,7 @@ job "k3s" {
     task "server" {
       driver = "raw_exec"
       artifact {
-        source = "https://github.com/k3s-io/k3s/releases/download/v1.22.17%2Bk3s1/k3s"
+        source = "https://github.com/k3s-io/k3s/releases/download/v1.23.17%2Bk3s1/k3s"
       }
       config {
         command = "local/k3s"
@@ -88,7 +88,7 @@ job "k3s" {
     task "server" {
       driver = "raw_exec"
       artifact {
-        source = "https://github.com/k3s-io/k3s/releases/download/v1.22.17%2Bk3s1/k3s"
+        source = "https://github.com/k3s-io/k3s/releases/download/v1.23.17%2Bk3s1/k3s"
       }
       config {
         command = "local/k3s"
