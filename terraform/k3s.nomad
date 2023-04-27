@@ -27,6 +27,10 @@ job "k3s" {
       artifact {
         source = "https://github.com/k3s-io/k3s/releases/download/v1.23.17%2Bk3s1/k3s"
       }
+      resources {
+        cpu = 300
+        memory = 500
+      }
       config {
         command = "local/k3s"
         args    = [
@@ -61,6 +65,10 @@ job "k3s" {
       artifact {
         source = "https://github.com/k3s-io/k3s/releases/download/v1.23.17%2Bk3s1/k3s"
       }
+      resources {
+        cpu = 300
+        memory = 500
+      }
       config {
         command = "local/k3s"
         args    = [
@@ -89,6 +97,10 @@ job "k3s" {
       driver = "raw_exec"
       artifact {
         source = "https://github.com/k3s-io/k3s/releases/download/v1.23.17%2Bk3s1/k3s"
+      }
+      resources {
+        cpu = 300
+        memory = 500
       }
       config {
         command = "local/k3s"
