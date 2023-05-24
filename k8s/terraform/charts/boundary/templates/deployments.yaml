@@ -1,0 +1,132 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: boundary-controller
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: boundary-controller
+  template:
+    metadata:
+      labels:
+        app: boundary-controller
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap-worker.yaml") . | sha256sum }}
+    spec:
+      initContainers:
+      - name: boundary-init
+        image: hashicorp/boundary:0.12.2
+        command:
+        - boundary
+        - database
+        - init
+        - -config
+        - /boundary/boundary.hcl
+        - -skip-auth-method-creation
+        - -skip-host-resources-creation
+        - -skip-initial-login-role-creation
+        - -skip-scopes-creation
+        - -skip-target-creation
+        volumeMounts:
+        - mountPath: /boundary
+          name: boundary-controller-config
+          readOnly: true
+        env:
+        - name: BOUNDARY_PG_URL
+          value: postgresql://boundary:admin123@postgres-postgresql:5432/boundary?sslmode=disable
+        - name: HOSTNAME
+          value: boundary-controller
+      containers:
+      - name: boundary
+        image: hashicorp/boundary:0.12.2
+        command:
+        - boundary
+        - server
+        - -config
+        - /boundary/boundary.hcl
+        ports:
+        - name: api
+          containerPort: 9200
+        - name: cluster
+          containerPort: 9201
+        volumeMounts:
+        - mountPath: /boundary
+          name: boundary-controller-config
+          readOnly: true
+        env:
+        - name: BOUNDARY_PG_URL
+          value: postgresql://boundary:admin123@postgres-postgresql:5432/boundary?sslmode=disable
+        - name: HOSTNAME
+          value: boundary-controller
+        - name: AWS_ACCESS_KEY_ID
+          value: vault:aws/creds/boundary#access_key
+        - name: AWS_SECRET_ACCESS_KEY
+          value: vault:aws/creds/boundary#secret_key
+        readinessProbe:
+          tcpSocket:
+            port: 9200
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        livenessProbe:
+          tcpSocket:
+            port: 9200
+          initialDelaySeconds: 15
+          periodSeconds: 15
+      volumes:
+      - name: boundary-controller-config
+        configMap:
+          name: boundary-controller-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: boundary-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: boundary-worker
+  template:
+    metadata:
+      labels:
+        app: boundary-worker
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap-worker.yaml") . | sha256sum }}
+    spec:
+      containers:
+      - name: boundary
+        image: hashicorp/boundary:0.12.2
+        command:
+        - boundary
+        - server
+        - -config
+        - /boundary/boundary.hcl
+        ports:
+        - name: data
+          containerPort: 9202
+        volumeMounts:
+        - mountPath: /boundary
+          name: boundary-worker-config
+          readOnly: true
+        env:
+        - name: BOUNDARY_PG_URL
+          value: postgresql://boundary:admin123@postgres-postgresql:5432/boundary?sslmode=disable
+        - name: HOSTNAME
+          value: boundary-worker
+        readinessProbe:
+          tcpSocket:
+            port: 9200
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        livenessProbe:
+          tcpSocket:
+            port: 9200
+          initialDelaySeconds: 15
+          periodSeconds: 15
+      volumes:
+      - name: boundary-worker-config
+        configMap:
+          name: boundary-worker-config

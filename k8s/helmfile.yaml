@@ -1,5 +1,0 @@
-helmfiles:
-- path: vault-helm/helmfile.yaml
-
-helmDefaults:
-  kubeContext: default

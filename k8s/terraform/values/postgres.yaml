@@ -1,0 +1,5 @@
+auth:
+  postgresPassword: admin123
+  username: boundary
+  password: admin123
+  database: boundary
