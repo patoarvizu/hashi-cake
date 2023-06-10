@@ -8,6 +8,7 @@ data:
     worker {
       name = "kubernetes-worker"
       controllers = ["boundary-controller"]
+      public_addr = "localhost:9300"
     }
     listener "tcp" {
       address = "0.0.0.0"
