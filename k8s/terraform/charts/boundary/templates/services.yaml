@@ -23,9 +23,39 @@ metadata:
   labels:
     app: boundary-worker
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
   - port: 9202
+    targetPort: data
+    name: data
+  selector:
+    app: boundary-worker
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: boundary-controller-lb
+  labels:
+    app: boundary-controller
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 9200
+    targetPort: api
+    name: api
+  selector:
+    app: boundary-controller
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: boundary-worker-lb
+  labels:
+    app: boundary-worker
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 9300
     targetPort: data
     name: data
   selector:
