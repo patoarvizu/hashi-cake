@@ -27,8 +27,6 @@ spec:
         - /boundary/boundary.hcl
         - -skip-auth-method-creation
         - -skip-host-resources-creation
-        - -skip-initial-login-role-creation
-        - -skip-scopes-creation
         - -skip-target-creation
         volumeMounts:
         - mountPath: /boundary
