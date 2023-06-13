@@ -17,10 +17,10 @@ resource kubernetes_service_v1 vault_ext {
   }
   spec {
     selector = {
-     "app.kubernetes.io/instance" = "vault"
-     "app.kubernetes.io/name" = "vault"
-     component = "server"
-     vault-active = "true"
+      "app.kubernetes.io/instance" = "vault"
+      "app.kubernetes.io/name" = "vault"
+      component = "server"
+      vault-active = "true"
     }
     port {
       port = 8200
