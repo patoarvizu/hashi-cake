@@ -4,3 +4,4 @@ vagrant/nomad-k3s.yaml
 **/terraform.tfstate.backup
 **/.terraform/
 packer/output-box
+**/.waypoint
