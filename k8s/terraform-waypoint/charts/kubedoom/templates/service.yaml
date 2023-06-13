@@ -1,0 +1,16 @@
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: kubedoom
+  name: kubedoom
+  namespace: kubedoom
+spec:
+  type: ClusterIP
+  ports:
+  - port: 5900
+    targetPort: vnc
+    name: vnc
+  selector:
+    app: kubedoom
