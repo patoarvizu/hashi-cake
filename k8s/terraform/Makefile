@@ -1,3 +1,6 @@
+apply:
+	terraform apply -auto-approve
+
 init:
 	@kubectl -n vault get secret unseal-keys > /dev/null 2>&1 || kubectl -n vault exec vault-0 -- vault operator init -format json -key-shares 1 -key-threshold 1 | tee init.json > /dev/null
 	@kubectl -n vault get secret unseal-keys > /dev/null 2>&1 || kubectl -n vault create secret generic unseal-keys --from-file=unseal-keys=init.json
