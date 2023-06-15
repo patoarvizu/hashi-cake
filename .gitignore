@@ -1,5 +1,5 @@
-vagrant/.vagrant/
-vagrant/nomad-k3s.yaml
+**/.vagrant/
+**/nomad-k3s.yaml
 **/terraform.tfstate
 **/terraform.tfstate.backup
 **/.terraform/
