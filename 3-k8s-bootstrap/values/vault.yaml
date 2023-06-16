@@ -6,11 +6,6 @@ server:
       enabled: true
     standby:
       enabled: false
-    externalTrafficPolicy: Local
-  ingress:
-    enabled: true
-    hosts:
-    - host: localhost
   ha:
     enabled: true
     config: |
