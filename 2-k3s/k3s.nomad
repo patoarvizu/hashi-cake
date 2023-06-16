@@ -39,7 +39,7 @@ job "k3s" {
           "--token",
           "${token}",
           "--write-kubeconfig",
-          "/vagrant/nomad-k3s.yaml",
+          "/home/vagrant/.nomad-k3s/config",
           "--write-kubeconfig-mode",
           "644",
           "--advertise-address",

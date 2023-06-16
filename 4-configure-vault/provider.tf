@@ -1,4 +1,6 @@
-provider kubernetes {}
+provider "kubernetes" {
+  config_path = "~/.nomad-k3s/config"
+}
 
 provider vault {
   address = "http://localhost:8200"

@@ -19,6 +19,7 @@ Vagrant.configure('2') do |config|
       n.vm.network "forwarded_port", guest: 9701, host: 9701 + ((i - 1) * 10)
       n.vm.network "forwarded_port", guest: 9702, host: 9702 + ((i - 1) * 10)
       n.vm.network "forwarded_port", guest: 9703, host: 9703 + ((i - 1) * 10)
+      n.vm.synced_folder "~/.nomad-k3s/", "/home/vagrant/.nomad-k3s/", create: true
     end
   end
 end

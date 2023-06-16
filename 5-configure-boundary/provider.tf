@@ -3,7 +3,9 @@ provider boundary {
   recovery_kms_hcl = "${path.module}/files/recovery.hcl"
 }
 
-provider kubernetes {}
+provider "kubernetes" {
+  config_path = "~/.nomad-k3s/config"
+}
 
 provider vault {
   address = "http://localhost:8200"

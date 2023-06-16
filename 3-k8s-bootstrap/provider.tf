@@ -1,3 +1,9 @@
-provider "helm" {}
+provider "helm" {
+  kubernetes {
+    config_path = "~/.nomad-k3s/config"
+  }
+}
 
-provider "kubernetes" {}
+provider "kubernetes" {
+  config_path = "~/.nomad-k3s/config"
+}
