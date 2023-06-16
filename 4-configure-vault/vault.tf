@@ -14,36 +14,6 @@ resource vault_policy boundary_controller {
   policy = data.vault_policy_document.boundary_controller.hcl
 }
 
-resource vault_policy boundary {
-  name = "boundary"
-  policy = data.vault_policy_document.boundary.hcl
-}
-
-resource vault_database_secrets_mount postgres {
-  path = "db"
-  postgresql {
-    name = "boundary"
-    username = "postgres"
-    password = "admin123"
-    username_template = "{{ .RoleName }}-{{ random 8 }}"
-    connection_url = "postgresql://{{username}}:{{password}}@postgres-postgresql.boundary:5432/boundary?sslmode=disable"
-    verify_connection = true
-    allowed_roles = [
-      "boundary",
-    ]
-  }
-}
-
-resource vault_database_secret_backend_role boundary {
-  name = "boundary"
-  backend = vault_database_secrets_mount.postgres.path
-  db_name = vault_database_secrets_mount.postgres.postgresql[0].name
-  creation_statements = [
-    "CREATE ROLE \"{{name}}\" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}';",
-    "GRANT SELECT ON ALL TABLES IN SCHEMA public TO \"{{name}}\";",
-  ]
-}
-
 resource vault_mount kv {
   path = "secret"
   type = "kv"

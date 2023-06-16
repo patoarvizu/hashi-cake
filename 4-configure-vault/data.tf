@@ -39,10 +39,3 @@ data vault_policy_document boundary_controller {
     capabilities = [ "read" ]
   }
 }
-
-data vault_policy_document boundary {
-  rule {
-    path = "db/creds/boundary"
-    capabilities = [ "read" ]
-  }
-}
