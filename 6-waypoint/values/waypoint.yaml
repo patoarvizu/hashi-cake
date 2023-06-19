@@ -1,6 +1,4 @@
 server:
-  storage:
-    size: 3Gi
   runArgs:
   - -url-enabled=false
 
