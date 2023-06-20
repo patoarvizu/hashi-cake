@@ -20,7 +20,6 @@ Vagrant.configure('2') do |config|
         n.vm.network "forwarded_port", guest: 9300, host: 9300
         n.vm.network "forwarded_port", guest: 9701, host: 9701
         n.vm.network "forwarded_port", guest: 9702, host: 9702
-        n.vm.network "forwarded_port", guest: 9703, host: 9703
       end
     end
   end
