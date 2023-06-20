@@ -1,3 +1,7 @@
+locals {
+  k3s_version = "v1.27.2"
+}
+
 job "k3s" {
   constraint {
     operator = "distinct_hosts"
@@ -20,7 +24,7 @@ job "k3s" {
     task "server" {
       driver = "raw_exec"
       artifact {
-        source = "https://github.com/k3s-io/k3s/releases/download/v1.23.17%2Bk3s1/k3s"
+        source = "https://github.com/k3s-io/k3s/releases/download/$${local.k3s_version}%2Bk3s1/k3s"
       }
       resources {
         cpu = 300
@@ -53,7 +57,7 @@ job "k3s" {
     task "server" {
       driver = "raw_exec"
       artifact {
-        source = "https://github.com/k3s-io/k3s/releases/download/v1.23.17%2Bk3s1/k3s"
+        source = "https://github.com/k3s-io/k3s/releases/download/$${local.k3s_version}%2Bk3s1/k3s"
       }
       resources {
         cpu = 300
@@ -81,7 +85,7 @@ job "k3s" {
     task "server" {
       driver = "raw_exec"
       artifact {
-        source = "https://github.com/k3s-io/k3s/releases/download/v1.23.17%2Bk3s1/k3s"
+        source = "https://github.com/k3s-io/k3s/releases/download/$${local.k3s_version}%2Bk3s1/k3s"
       }
       resources {
         cpu = 300
