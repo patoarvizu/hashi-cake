@@ -179,3 +179,14 @@ The Kubedoom demo application is exposed via a password-protected VNC endpoint. 
 * Enter that into your VNC client. When the connection is getting established you may get a warning saying that the connection is unencrypted, which is expected. Press continue. You'll be prompted for a password, which you'll get in the next step.
 * Go back to the Boundary pop up screen, and under `Credentials` you'll see a field called `password`. Copy it and enter it into your VNC client.
 * That's it! You should see a familiar Doom interface that you can control with your keyboard. How to play it is beyond the scope of this tutorial, but you can head over to the original Kubedoom page to understand it better.
+
+### Cleaning up
+
+After you're done, you can run `make destroy` at the root directory, or go to `1-vagrant/` and run `vagrant destroy -f` manually to destroy the Vagrant machines.
+
+## Notes
+
+* Many settings in this demo are intentionally insecure to simplify the deployment. Don't take anything as an example of how to run any of these tools in production.
+* Vagrant/VirtualBox can be opinionated in networking aspects that might not be compatible with your machine or local network setup. More specifically, the IP addresses. If you run into issues, try modifying the specific `192.168.56.X` range in the `1-vagrant/` directory to see if that helps.
+* This demo isn't very resource-intensive, but if you find that your machines are running out of resources, you can adjust the Vagrant settings to launch VMs with higher resources and/or adjust the `k3s.nomad` job file to reduce the requested resources.
+* Feel free to open a GitHub issue to report problems or ask questions!
