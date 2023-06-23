@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: boundary-worker-config
+data:
+  boundary.hcl: |-
+    disable_mlock = true
+    worker {
+      name = "kubernetes-worker"
+      controllers = ["boundary-controller"]
+      public_addr = "localhost:9202"
+    }
+    listener "tcp" {
+      address = "0.0.0.0"
+      purpose = "api"
+      tls_disable = true
+    }
+    listener "tcp" {
+      address = "0.0.0.0"
+      purpose = "proxy"
+      tls_disable = true
+    }
+    kms "aead" {
+      purpose = "worker-auth"
+      aead_type = "aes-gcm"
+      key = "N8TgKR690Us22jY2S0TlXZyBlJb/+lHazHegBxoV3ck="
+      key_id = "worker-auth"
+    }

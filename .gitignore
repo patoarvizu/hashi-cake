@@ -1,0 +1,7 @@
+**/.vagrant/
+**/nomad-k3s.yaml
+**/terraform.tfstate
+**/terraform.tfstate.backup
+**/.terraform/
+**/output-box
+**/.waypoint

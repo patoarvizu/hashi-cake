@@ -1,0 +1,7 @@
+server:
+  runArgs:
+  - -url-enabled=false
+
+ui:
+  service:
+    type: ClusterIP

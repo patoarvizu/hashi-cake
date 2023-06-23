@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: boundary-controller-config
+data:
+  boundary.hcl: |-
+    disable_mlock = true
+    controller {
+      name = "kubernetes-controller"
+      database {
+          url = "env://BOUNDARY_PG_URL"
+      }
+      public_cluster_addr = "boundary-controller"
+    }
+    listener "tcp" {
+      address = "0.0.0.0"
+      purpose = "api"
+      tls_disable = true
+    }
+    listener "tcp" {
+      address = "0.0.0.0"
+      purpose = "cluster"
+      tls_disable = true
+    }
+    kms "aead" {
+      purpose = "root"
+      aead_type = "aes-gcm"
+      key = "N8TgKR690Us22jY2S0TlXZyBlJb/+lHazHegBxoV3ck="
+      key_id = "root"
+    }
+    kms "aead" {
+      purpose = "worker-auth"
+      aead_type = "aes-gcm"
+      key = "N8TgKR690Us22jY2S0TlXZyBlJb/+lHazHegBxoV3ck="
+      key_id = "worker-auth"
+    }
+    kms "aead" {
+      purpose = "recovery"
+      aead_type = "aes-gcm"
+      key = "N8TgKR690Us22jY2S0TlXZyBlJb/+lHazHegBxoV3ck="
+      key_id = "recovery"
+    }
