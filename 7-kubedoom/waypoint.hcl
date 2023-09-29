@@ -13,6 +13,7 @@ app "kubedoom" {
       create_namespace = true
       namespace = "kubedoom"
       chart = "${path.app}/charts/kubedoom"
+      kubeconfig = "${pathexpand("~")}/.nomad-k3s/config"
     }
   }
   url {
