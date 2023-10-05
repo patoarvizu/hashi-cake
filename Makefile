@@ -12,7 +12,6 @@ k3s:
 	cd 2-k3s/ && make
 
 k8s-bootstrap:
-	sleep 5
 	cd 3-k8s-bootstrap/ && make && make unseal
 
 configure-vault:

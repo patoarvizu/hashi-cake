@@ -16,6 +16,18 @@ job "k3s" {
     service {
       name = "k3s-a"
       port = "k3s"
+      check {
+        name = "k3s-ready"
+        type = "http"
+        port = "k3s"
+        path = "/readyz"
+        interval = "10s"
+        timeout = "2m"
+        protocol = "https"
+        tls_skip_verify = true
+        initial_status = "critical"
+        success_before_passing = 1
+      }
     }
     affinity {
       attribute = "$${node.unique.name}"
@@ -48,12 +60,34 @@ job "k3s" {
           "--flannel-iface",
           "eth1",
           "--tls-san",
-          "k3s-a.service.consul"
+          "k3s-a.service.consul",
+          "--kube-apiserver-arg=anonymous-auth=true"
         ]
       }
     }
   }
   group "k3s-b" {
+    network {
+      port "k3s" {
+        static = 6443
+      }
+    }
+    service {
+      name = "k3s-b"
+      port = "k3s"
+      check {
+        name = "k3s-ready"
+        type = "http"
+        port = "k3s"
+        path = "/readyz"
+        interval = "10s"
+        timeout = "2m"
+        protocol = "https"
+        tls_skip_verify = true
+        initial_status = "critical"
+        success_before_passing = 1
+      }
+    }
     task "server" {
       driver = "raw_exec"
       artifact {
@@ -77,11 +111,33 @@ job "k3s" {
           "eth1",
           "--server",
           "https://k3s-a.service.consul:6443",
+          "--kube-apiserver-arg=anonymous-auth=true"
         ]
       }
     }
   }
   group "k3s-c" {
+    network {
+      port "k3s" {
+        static = 6443
+      }
+    }
+    service {
+      name = "k3s-c"
+      port = "k3s"
+      check {
+        name = "k3s-ready"
+        type = "http"
+        port = "k3s"
+        path = "/readyz"
+        interval = "10s"
+        timeout = "2m"
+        protocol = "https"
+        tls_skip_verify = true
+        initial_status = "critical"
+        success_before_passing = 1
+      }
+    }
     task "server" {
       driver = "raw_exec"
       artifact {
@@ -105,6 +161,7 @@ job "k3s" {
           "eth1",
           "--server",
           "https://k3s-a.service.consul:6443",
+          "--kube-apiserver-arg=anonymous-auth=true"
         ]
       }
     }
